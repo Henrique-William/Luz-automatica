@@ -12,6 +12,7 @@
 #define DATABASE_URL "https://luz-automatica-6715c-default-rtdb.firebaseio.com/ "
 
 #define ledPin 13
+#define ldrPin 35
 
 // Inicialize o cliente Firebase
 FirebaseData fbdo;
@@ -24,6 +25,7 @@ bool signupOK = false;
 void setup(){
   Serial.begin(115200);
   pinMode(ledPin, OUTPUT);
+  pinMode(ldrPin, INPUT);
   
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.print("Connecting to Wi-Fi");
@@ -64,7 +66,12 @@ void setup(){
 void loop() {
   if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 5000 || sendDataPrevMillis == 0)) {
     sendDataPrevMillis = millis();
+    
 
+    
+    int ldrValue = analogRead(ldrPin);
+    Serial.print("Valor do sensor de luminosidade: " );
+    Serial.println(ldrValue);
       // Verificação periódica do valor no Firebase
   if (Firebase.RTDB.getBool(&fbdo, "/ledStatus")) {
     bool ledStatus = fbdo.boolData();
