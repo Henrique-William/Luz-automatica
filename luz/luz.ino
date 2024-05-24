@@ -9,7 +9,7 @@
 
 // Defina suas credenciais do Firebase
 #define API_KEY "AIzaSyBHhiwCBjUoZvi8w0q1BGEh68hAk2E6gok"
-#define DATABASE_URL "https://luz-automatica-6715c-default-rtdb.firebaseio.com/ "
+#define DATABASE_URL "https://luz-automatica-6715c-default-rtdb.firebaseio.com/"
 
 #define ledPin 13
 #define ldrPin 35
