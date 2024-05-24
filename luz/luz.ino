@@ -66,20 +66,25 @@ void setup(){
 void loop() {
   if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 5000 || sendDataPrevMillis == 0)) {
     sendDataPrevMillis = millis();
-    
-
-    
+        
     int ldrValue = analogRead(ldrPin);
     Serial.print("Valor do sensor de luminosidade: " );
     Serial.println(ldrValue);
+
+    if (ldrValue <= 1500){
+      digitalWrite(ledPin, HIGH);
+    } else {
+      digitalWrite(ledPin, LOW);
+    }
+    
       // Verificação periódica do valor no Firebase
-  if (Firebase.RTDB.getBool(&fbdo, "/ledStatus")) {
-    bool ledStatus = fbdo.boolData();
-    digitalWrite(ledPin, ledStatus ? HIGH : LOW);
-    Serial.println("Estado do LED atualizado: " + String(ledStatus));
-  } else {
-    Serial.println("Falha ao obter o estado do LED: " + fbdo.errorReason());
-  }
+  //if (Firebase.RTDB.getBool(&fbdo, "/ledStatus")) {
+    //bool ledStatus = fbdo.boolData();
+    //digitalWrite(ledPin, ledStatus ? HIGH : LOW);
+    //Serial.println("Estado do LED atualizado: " + String(ledStatus));
+  //} else {
+    //Serial.println("Falha ao obter o estado do LED: " + fbdo.errorReason());
+  //}
 
   delay(2000); // Atraso de 2 segundos antes da próxima verificação
   
