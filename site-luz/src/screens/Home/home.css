@@ -16,6 +16,7 @@
 }
 
 .consumo__container {
+    position: relative;
     width: 270px;
     height: 270px;
     background-color: #414141;
@@ -23,13 +24,20 @@
     border-radius: 10000px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
+}
+.consumo__moeda {
+    position: absolute;
+    z-index: 1;
+    top: 0px;
 }
 
 .consumo {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .consumo__valor {
