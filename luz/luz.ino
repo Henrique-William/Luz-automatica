@@ -93,7 +93,7 @@ void loop() {
     //Serial.println("Falha ao obter o estado do LED: " + fbdo.errorReason());
   //}
 
-    if (Firebase.RTDB.getBool(&fbdo, "/ledStatus")) {
+    if (Firebase.RTDB.getBool(&fbdo, "/luz/ledStatus")) {
       bool ledStatus = fbdo.boolData();
       digitalWrite(ledPin, ledStatus && ldrValue <= 1000 ? HIGH : LOW);
       Serial.println("Estado do LED atualizado: " + String(ledStatus));
