@@ -21,6 +21,10 @@ FirebaseConfig config;
 
 unsigned long sendDataPrevMillis = 0;
 bool signupOK = false;
+bool ledStatus = false;
+bool button = false;
+int segundosLed = 0;
+int ldrValue =0;
 
 void setup(){
   Serial.begin(115200);
@@ -66,44 +70,54 @@ void setup(){
 void loop() {
   if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 5000 || sendDataPrevMillis == 0)) {
     sendDataPrevMillis = millis();
+
+
         
-    int ldrValue = analogRead(ldrPin);
+    ldrValue = analogRead(ldrPin);
     Serial.print("Valor do sensor de luminosidade: " );
     Serial.println(ldrValue);
+    
 
-    //if (Firebase.RTDB.getBool(&fbdo, "/luz/led")) {
-      //bool ledStatus = fbdo.boolData();
-      //digitalWrite(ledPin, ledStatus ? HIGH : LOW);
-      //Serial.println("Estado do LED atualizado: " + String(ledStatus));
-    //} else {
-      //Serial.println("Falha ao obter o estado do LED: " + fbdo.errorReason());
-    //}
+     if (Firebase.RTDB.getInt(&fbdo, "/luz/segundosLed")) {
+      segundosLed = fbdo.intData();
+      Serial.print("Variavel int recebida do Firebase: ");
+      Serial.println(segundosLed);
+    } else {
+      Serial.println("Falha ao obter variavel int do Firebase");
+    }
+  }
+
 
     
-      // Verificação periódica do valor no Firebase
-  //if (Firebase.RTDB.getBool(&fbdo, "/luz/ledStatus")) {
-    //bool ledStatus = fbdo.boolData();
-    //Serial.println("Estado do LED Automático atualizado: " + String(ledStatus));
-    //if (ldrValue <= 1000 && ledStatus == 1) {
-      //digitalWrite(ledPin, HIGH);
-    //} else {
-      //digitalWrite(ledPin, LOW);
-    //}
-  //} else {
-    //Serial.println("Falha ao obter o estado do LED: " + fbdo.errorReason());
-  //}
-
     if (Firebase.RTDB.getBool(&fbdo, "/luz/ledStatus")) {
-      bool ledStatus = fbdo.boolData();
+      ledStatus = fbdo.boolData();
       digitalWrite(ledPin, ledStatus && ldrValue <= 1000 ? HIGH : LOW);
-      Serial.println("Estado do LED atualizado: " + String(ledStatus));
+      Serial.println("Estado do LED AUTOMATICO atualizado: " + String(ledStatus));
+      segundosLed++;
     } else {
       Serial.println("Falha ao obter o estado do LED: " + fbdo.errorReason());
     }
 
+    if (Firebase.RTDB.getBool(&fbdo, "/luz/button")) {
+      button = fbdo.boolData();
+      if( ledPin, button == 1 && ledStatus == 0)
+      digitalWrite(ledPin, HIGH);
+      segundosLed++;
+      Serial.println("Estado do LED atualizado: " + String(button));
+    }
 
-    delay(1000); // Atraso de 2 segundos antes da próxima verificação
+    //Atualiza a variável segundosLed no Firebase
+    if (Firebase.ready()) {
+    if (Firebase.RTDB.setInt(&fbdo, "/luz/segundosLed", segundosLed)) {
+      Serial.println("Valor inteiro enviado com sucesso para o Firebase: " +String(segundosLed));
+    } else {
+      Serial.println("Falha ao enviar valor inteiro para o Firebase");
+    }
+  }
+    
+
+
+    delay(2000); // Atraso de 1 segundos antes da próxima verificação
   
      
   }
-}
