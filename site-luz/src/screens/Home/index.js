@@ -2,6 +2,7 @@ import React from 'react'
 import './home.css'
 import ToggleButton from '../../components/ToggleButton'
 import Button from '../../components/Button'
+import { Consumo } from '../../components/Consumo'
 
 export default function Home() {
   return (
@@ -10,13 +11,7 @@ export default function Home() {
 
       <section className="consumo">
       
-        <div className="consumo__container">
-          <p className="consumo__moeda">R$</p>              
-            <h2 className="consumo__valor">
-              21
-              <p className="consumo__centavos">,49</p>
-            </h2>
-        </div>
+        <Consumo />
       </section>
 
       {/* Botões principais */}
