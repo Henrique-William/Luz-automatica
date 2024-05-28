@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './toggle.css';
 import { db } from '../../firebase';  // Certifique-se de que o caminho está correto
-import { ref, set } from 'firebase/database';
+import { ref, update } from 'firebase/database';
 
 const ToggleButton = () => {
   const [isChecked, setIsChecked] = useState(false);
@@ -17,7 +17,7 @@ const ToggleButton = () => {
 
   const sendDataToFirebase = async (state) => {
     try {
-      await set(ref(db, 'luz'), {
+      await update(ref(db, 'luz'), {
         ledStatus: state,
       });
       console.log('Data sent to Firebase successfully');

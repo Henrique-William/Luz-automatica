@@ -1,0 +1,27 @@
+.botoes__botao {
+    width: 120px;
+    height: 120px;
+    background-color: #A7F2BA;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease; /* Adiciona transição suave */
+    transform: scale(1); /* Estado inicial da escala */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
+}
+
+.pressionado {
+    background-color: #2BD9A8;
+    transform: scale(1.1);
+}
+
+.botoes__icone {
+    width: 70px;
+    height: 70px;
+}
+.botao_apertado {
+    transform: scale(1.1);
+    filter: drop-shadow(4.0px 16.0px 8.0px hsla(0, 0%, 100%, 0.50));
+}
