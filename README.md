@@ -1,6 +1,3 @@
-# Luz-automatica
-#Projeto de eletronica
-
 # **Luz Automáquica**
 
  - cd /site-luz
