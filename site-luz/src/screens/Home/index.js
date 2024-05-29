@@ -10,7 +10,6 @@ export default function Home() {
       {/* Area de consumo */}
 
       <section className="consumo">
-      
         <Consumo />
       </section>
 

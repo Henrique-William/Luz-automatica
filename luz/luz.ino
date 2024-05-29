@@ -4,8 +4,8 @@
 #include "addons/RTDBHelper.h"
 
 // Defina suas credenciais de WiFi
-#define WIFI_SSID "Desktop_F4216351"
-#define WIFI_PASSWORD "57042073"
+#define WIFI_SSID "particular"
+#define WIFI_PASSWORD "joao654321"
 
 // Defina suas credenciais do Firebase
 #define API_KEY "AIzaSyBHhiwCBjUoZvi8w0q1BGEh68hAk2E6gok"
@@ -87,11 +87,10 @@ void loop() {
     }
   }
 
-
     
     if (Firebase.RTDB.getBool(&fbdo, "/luz/ledStatus")) {
       ledStatus = fbdo.boolData();
-      digitalWrite(ledPin, ledStatus && ldrValue <= 1000 ? HIGH : LOW);
+      digitalWrite(ledPin, ledStatus && ldrValue <= 2000  ? HIGH : LOW);
       Serial.println("Estado do LED AUTOMATICO atualizado: " + String(ledStatus));
       segundosLed++;
     } else {
@@ -100,10 +99,11 @@ void loop() {
 
     if (Firebase.RTDB.getBool(&fbdo, "/luz/button")) {
       button = fbdo.boolData();
-      if( ledPin, button == 1 && ledStatus == 0)
-      digitalWrite(ledPin, HIGH);
-      segundosLed++;
-      Serial.println("Estado do LED atualizado: " + String(button));
+      if( ledPin, button == 1 && ledStatus == 0){
+        digitalWrite(ledPin, button ? HIGH : LOW);
+        segundosLed++;
+        Serial.println("Estado do LED atualizado: " + String(button));
+      }
     }
 
     //Atualiza a variável segundosLed no Firebase
