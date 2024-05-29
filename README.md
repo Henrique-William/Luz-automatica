@@ -1,4 +1,4 @@
-# **Luz Automáquica**
+# **Luz Automática**
 
  - cd /site-luz
  - npm install
