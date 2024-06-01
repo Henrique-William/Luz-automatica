@@ -15,10 +15,8 @@ export const Consumo = () => {
   };
 
   useEffect(() => {
-    // Reference to the Firebase path
     const ledSegundosRef = ref(db, '/luz/segundosLed');
 
-    // Function to fetch data initially and every 30 seconds
     const fetchData = async () => {
       onValue(ledSegundosRef, (snapshot) => {
         if (snapshot.exists()) {
@@ -32,13 +30,10 @@ export const Consumo = () => {
       });
     };
 
-    // Fetch data initially
     fetchData();
 
-    // Set up interval to fetch data every 30 seconds (30000 milliseconds)
     const intervalId = setInterval(fetchData, 43200000);
 
-    // Clean up the interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
 
